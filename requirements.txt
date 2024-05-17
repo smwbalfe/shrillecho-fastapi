@@ -1,0 +1,6 @@
+uvicorn
+starlette-graphene3
+aiodataloader
+soundcloud-v2
+redis
+strawberry-graphql[fastapi]

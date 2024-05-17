@@ -1,0 +1,37 @@
+ 
+# '''s
+
+# mutation {
+#   updateTrackName(trackId: "127", newName: "New Track Name") {
+#     track {
+#       id
+#     }
+#   }
+# }
+
+# UpdateTrackName is the name of mutation method converted to camel case in our mutation
+# likewise the track_id and new_name are converted to camel case
+#
+# '''
+# # Define the new Input type with x and y fields
+# class XYInput(graphene.InputObjectType):
+#     x = graphene.String(required=True)
+#     y = graphene.String(required=True)
+
+# # Update the UpdateTrackName mutation
+# class UpdateTrackName(graphene.Mutation):
+#     class Arguments:
+#         # Use the new XYInput type for track_info argument
+#         track_info = graphene.Argument(XYInput, required=True)
+
+#     track = graphene.Field(gtype.Track)
+
+#     def mutate(self, info, track_info):
+
+#         print(track_info.x, track_info.y)
+#         return "test"
+
+# # Assuming Mutation is part of a larger GraphQL schema
+# class Mutation(graphene.ObjectType):
+#     update_track_name = UpdateTrackName.Field()
+
