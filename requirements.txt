@@ -4,3 +4,6 @@ aiodataloader
 soundcloud-v2
 redis
 strawberry-graphql[fastapi]
+neo4j
+pydantic
+PyJWT

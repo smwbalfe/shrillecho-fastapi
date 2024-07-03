@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends
 import spotipy
-from dependencies.spotify_client import (get_spotify_client)
+from auth import spotify_auth_guard
+from shrillecho.api.api_client import SpotifyClient
+
+#fd
 
 router = APIRouter()
 
-
-
 @router.get("/currently-playing")
-async def pause(sp: spotipy.Spotify = Depends(get_spotify_client)):
+async def pause(sp = Depends(spotify_auth_guard)):
     try:
         current_track = sp.current_playback()
 
@@ -30,9 +31,8 @@ async def pause(sp: spotipy.Spotify = Depends(get_spotify_client)):
 
 
 @router.get("/toggle-playback")
-async def play(sp: spotipy.Spotify = Depends(get_spotify_client)):
+async def play(sp: SpotifyClient = Depends(spotify_auth_guard)):
     devices = sp.devices()['devices']
-
     id = ''
     for d in devices:
         if d['name'] == 'shrillecho-app':
@@ -48,7 +48,6 @@ async def play(sp: spotipy.Spotify = Depends(get_spotify_client)):
         print("no playback state")
         sp.start_playback(device_id=id, uris=['spotify:track:6Xe6LY9gii4gyEsCx4J6vd'])
 
-
 @router.get("/next")
-async def skip(sp: spotipy.Spotify = Depends(get_spotify_client)):
+async def skip(sp: SpotifyClient = Depends(spotify_auth_guard)):
     sp.next_track()

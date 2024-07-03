@@ -6,13 +6,13 @@ WORKDIR /app
 COPY ./requirements.txt ./requirements.txt
 
 ENV VIRTUAL_ENV=/usr/local
+
 RUN pip install uv
-RUN uv pip install -r requirements.txt
-
+RUN uv venv ; .venv/scripts/activate ; uv pip install -r requirements.txt
 ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-RUN uv pip install shrillecho --upgrade
+# RUN uv pip install shrillecho --upgrade
 
-RUN apt-get -y update && apt-get -y install libgl1
+# RUN apt-get -y update && apt-get -y install libgl1
 
 COPY ./ ./
 
